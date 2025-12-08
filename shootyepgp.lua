@@ -686,25 +686,6 @@ function sepgp:delayedInit()
   self:defaultPrint(string.format(L["v%s Loaded."],sepgp._versionString))
 end
 
-  -- init options and comms
-  self._options = self:buildMenu()
-  self:RegisterChatCommand({"/shooty","/sepgp","/shootyepgp"},self.cmdtable())
-  self:RegisterEvent("CHAT_MSG_ADDON","addonComms")  
-  -- broadcast our version
-  local addonMsg = string.format("VERSION;%s;%d",sepgp._versionString,major_ver)
-  self:addonMessage(addonMsg,"GUILD")
-  if (IsGuildLeader()) then
-    self:shareSettings()
-  end
-  -- safe officer note setting when we are admin
-  if (admin()) then
-    if not self:IsHooked("GuildRosterSetOfficerNote") then
-      self:Hook("GuildRosterSetOfficerNote")
-    end
-  end
-  self:defaultPrint(string.format(L["v%s Loaded."],sepgp._versionString))
-end
-
 function sepgp:AddDataToTooltip(tooltip,itemlink,itemstring,is_master)
   local price
   if (itemstring) then
@@ -2202,44 +2183,48 @@ function sepgp:suggestedAwardEP()
   end
 end
 
-function sepgp:parseVersion(version, otherVersion)
-    if not sepgp._version then sepgp._version = {} end
-
-    -- Default to 0.0.0 if nil
-    version = version or "0.0.0"
-    otherVersion = otherVersion or "0.0.0"
-
-    -- Parse version
-    if type(version) == "string" then
-        for major, minor, patch in string.gfind(version, "(%d+)[^%d]?(%d*)[^%d]?(%d*)") do
-            sepgp._version.major = tonumber(major) or 0
-            sepgp._version.minor = tonumber(minor) or 0
-            sepgp._version.patch = tonumber(patch) or 0
-        end
+function sepgp:parseVersion(version,otherVersion)
+  if not sepgp._version then sepgp._version = {} end
+  for major,minor,patch in string.gfind(version,"(%d+)[^%d]?(%d*)[^%d]?(%d*)") do
+    sepgp._version.major = tonumber(major)
+    sepgp._version.minor = tonumber(minor)
+    sepgp._version.patch = tonumber(patch)
+  end
+  if (otherVersion) then
+    if not sepgp._otherversion then sepgp._otherversion = {} end
+    for major,minor,patch in string.gfind(otherVersion,"(%d+)[^%d]?(%d*)[^%d]?(%d*)") do
+      sepgp._otherversion.major = tonumber(major)
+      sepgp._otherversion.minor = tonumber(minor)
+      sepgp._otherversion.patch = tonumber(patch)      
     end
-
-    -- Parse otherVersion
-    if type(otherVersion) == "string" then
-        if not sepgp._otherversion then sepgp._otherversion = {} end
-        for major, minor, patch in string.gfind(otherVersion, "(%d+)[^%d]?(%d*)[^%d]?(%d*)") do
-            sepgp._otherversion.major = tonumber(major) or 0
-            sepgp._otherversion.minor = tonumber(minor) or 0
-            sepgp._otherversion.patch = tonumber(patch) or 0
-        end
-
-        -- Compare versions
-        if sepgp._otherversion.major > sepgp._version.major then return true, "major"
-        elseif sepgp._otherversion.major < sepgp._version.major then return
-        else
-            if sepgp._otherversion.minor > sepgp._version.minor then return true, "minor"
-            elseif sepgp._otherversion.minor < sepgp._version.minor then return
-            else
-                if sepgp._otherversion.patch > sepgp._version.patch then return true, "patch"
-                elseif sepgp._otherversion.patch < sepgp._version.patch then return
-                end
+    if (sepgp._otherversion.major ~= nil and sepgp._version.major ~= nil) then
+      if (sepgp._otherversion.major < sepgp._version.major) then -- we are newer
+        return
+      elseif (sepgp._otherversion.major > sepgp._version.major) then -- they are newer
+        return true, "major"        
+      else -- tied on major, go minor
+        if (sepgp._otherversion.minor ~= nil and sepgp._version.minor ~= nil) then
+          if (sepgp._otherversion.minor < sepgp._version.minor) then -- we are newer
+            return
+          elseif (sepgp._otherversion.minor > sepgp._version.minor) then -- they are newer
+            return true, "minor"
+          else -- tied on minor, go patch
+            if (sepgp._otherversion.patch ~= nil and sepgp._version.patch ~= nil) then
+              if (sepgp._otherversion.patch < sepgp._version.patch) then -- we are newer
+                return
+              elseif (sepgp._otherversion.patch > sepgp._version.patch) then -- they are newwer
+                return true, "patch"
+              end
+            elseif (sepgp._otherversion.patch ~= nil and sepgp._version.patch == nil) then -- they are newer
+              return true, "patch"
             end
+          end    
+        elseif (sepgp._otherversion.minor ~= nil and sepgp._version.minor == nil) then -- they are newer
+          return true, "minor"
         end
+      end
     end
+  end
 end
 
 function sepgp:camelCase(word)
