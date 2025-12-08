@@ -3,7 +3,7 @@
 ## Title-zhCN: shootyepgp EPGP插件
 ## Notes: Effort Points/Gear Points Loot System
 ## Notes-zhCN: 贡献点/装备点拾取制度系统
-## Author: Roadblock
+## Author: rotaruandrei93
 ## X-Website: https://github.com/rotaruandrei93/shootyepgp-BOW
 ## X-Category: Guild
 ## X-Credits: shooty, Qcat(zhCN)
