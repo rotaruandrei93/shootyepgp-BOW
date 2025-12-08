@@ -664,9 +664,12 @@ function sepgp:delayedInit()
   -- migrate EPGP storage if needed
   self:parseVersion(sepgp._versionString)
   local major_ver = self._version.major
-  if IsGuildLeader() and ( (sepgp_dbver == nil) or (major_ver > sepgp_dbver) ) then
-    sepgp[string.format("v%dtov%d",(sepgp_dbver or 2),major_ver)](sepgp)
-  end
+if IsGuildLeader() and ( (sepgp_dbver == nil) or (major_ver > sepgp_dbver) ) then
+    local migrationFuncName = string.format("v%dtov%d", (sepgp_dbver or 2), major_ver)
+    if sepgp[migrationFuncName] and type(sepgp[migrationFuncName]) == "function" then
+        sepgp[migrationFuncName](sepgp)
+    end
+end
   -- init options and comms
   self._options = self:buildMenu()
   self:RegisterChatCommand({"/shooty","/sepgp","/shootyepgp"},self.cmdtable())
