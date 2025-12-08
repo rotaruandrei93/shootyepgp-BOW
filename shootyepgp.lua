@@ -677,19 +677,13 @@ function sepgp:delayedInit()
   if (IsGuildLeader()) then
     self:shareSettings()
   end
-end
-  -- Initialize options and chat commands
-  self._options = self:buildMenu()
-  self:RegisterChatCommand({"/shooty","/sepgp","/shootyepgp"}, self.cmdtable())
-  self:RegisterEvent("CHAT_MSG_ADDON", "addonComms")
-
-  -- Broadcast our version
-  local addonMsg = string.format("VERSION;%s;%d", sepgp._versionString, major_ver)
-  self:addonMessage(addonMsg, "GUILD")
-
-  if IsGuildLeader() then
-    self:shareSettings()
+  -- safe officer note setting when we are admin
+  if (admin()) then
+    if not self:IsHooked("GuildRosterSetOfficerNote") then
+      self:Hook("GuildRosterSetOfficerNote")
+    end
   end
+  self:defaultPrint(string.format(L["v%s Loaded."],sepgp._versionString))
 end
 
   -- init options and comms
