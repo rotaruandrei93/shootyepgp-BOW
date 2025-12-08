@@ -650,40 +650,34 @@ end
 
 function sepgp:delayedInit()
   --table.insert(sepgp_debug,{[date("%b/%d %H:%M:%S")]="delayedInit"})
-
-  -- Setup reserve channel if in a guild
-  if IsInGuild() then
-    local guildName = GetGuildInfo("player")
-    if guildName and guildName ~= "" then
-      sepgp_reservechannel = string.format("%sReserves", string.gsub(guildName, " ", "")) -- TODO: Check if channel names can have chinese characters
+  if (IsInGuild()) then
+    local guildName = (GetGuildInfo("player"))
+    if (guildName) and guildName ~= "" then
+      sepgp_reservechannel = string.format("%sReserves",(string.gsub(guildName," ",""))) -- TODO: Check if channel names can have chinese characters
     end
   end
-
-  if sepgp_reservechannel == nil then sepgp_reservechannel = sepgp.VARS.reservechan end
-  local reservesChannelID = tonumber(GetChannelName(sepgp_reservechannel))
-  if reservesChannelID and reservesChannelID ~= 0 then
+  if sepgp_reservechannel == nil then sepgp_reservechannel = sepgp.VARS.reservechan end  
+  local reservesChannelID = tonumber((GetChannelName(sepgp_reservechannel)))
+  if (reservesChannelID) and (reservesChannelID ~= 0) then
     self:reservesToggle(true)
   end
-
   -- migrate EPGP storage if needed
-  if not sepgp._versionString then sepgp._versionString = sepgp_dbver or "3.60" end
   self:parseVersion(sepgp._versionString)
-
-  -- Ensure major/minor/patch are numbers
-  if not self._version then self._version = {} end
-  self._version.major = self._version.major or 0
-  self._version.minor = self._version.minor or 0
-  self._version.patch = self._version.patch or 0
   local major_ver = self._version.major
-
-  -- Safe migration call
-  if IsGuildLeader() and ((sepgp_dbver == nil) or (major_ver > sepgp_dbver)) then
-    local migrationFuncName = string.format("v%dtov%d", (sepgp_dbver or 2), major_ver)
-    if sepgp[migrationFuncName] and type(sepgp[migrationFuncName]) == "function" then
-      sepgp[migrationFuncName](sepgp)
-    end
+  if IsGuildLeader() and ( (sepgp_dbver == nil) or (major_ver > sepgp_dbver) ) then
+    sepgp[string.format("v%dtov%d",(sepgp_dbver or 2),major_ver)](sepgp)
   end
-
+  -- init options and comms
+  self._options = self:buildMenu()
+  self:RegisterChatCommand({"/shooty","/sepgp","/shootyepgp"},self.cmdtable())
+  self:RegisterEvent("CHAT_MSG_ADDON","addonComms")  
+  -- broadcast our version
+  local addonMsg = string.format("VERSION;%s;%d",sepgp._versionString,major_ver)
+  self:addonMessage(addonMsg,"GUILD")
+  if (IsGuildLeader()) then
+    self:shareSettings()
+  end
+end
   -- Initialize options and chat commands
   self._options = self:buildMenu()
   self:RegisterChatCommand({"/shooty","/sepgp","/shootyepgp"}, self.cmdtable())
