@@ -1,10 +1,10 @@
 ## Interface: 11200
-## Title: |cffffd700shootyepgp|r|cff0070dd-bow|r
+## Title: |cffffd700shootyepgp|r|cff0070dd-BOW|r
 ## Title-zhCN: shootyepgp EPGP插件
 ## Notes: Effort Points/Gear Points Loot System
 ## Notes-zhCN: 贡献点/装备点拾取制度系统
 ## Author: rotaruandrei93
-## X-Website: https://github.com/rotaruandrei93/shootyepgp-bow
+## X-Website: https://github.com/rotaruandrei93/shootyepgp-BOW
 ## X-Category: Guild
 ## X-Credits: shooty, Qcat(zhCN)
 ## Version: 3.60
