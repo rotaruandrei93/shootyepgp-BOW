@@ -5,7 +5,7 @@ local prices = {
     ----------------------------
   [55078] = {0,"T3.5"};  -- Ley-attuned Chocker
   [55084] = {38,"T3.5"};  -- Torn Wings of Midnight
-  [55081] = {28,"T3.5"};  -- Manadrenched Feather Slippers
+  [55081] = {0,"T3.5"};  -- Manadrenched Feather Slippers
   [55285] = {28,"T3.5"};  -- Crite's Holy Hands
   [55079] = {38,"T3.5"};  -- Ravenkeeper's Frenzied Embrace
   [55080] = {53,"T3.5"};  -- Bloodmoon, Sickle of the Murderous Flight
@@ -100,7 +100,7 @@ local prices = {
   [55352] = {38,"T3.5"};  -- Cloak of Rapid Regeneration
   [55354] = {28,"T3.5"};  -- Khadgar’s Guidance
   [55355] = {28,"T3.5"};  -- Memory of the Last Guardian
-  [55579] = {0,"T3.5"};   -- Hearth of Mephistroth
+  [55579] = {38,"T3.5"};   -- Hearth of Mephistroth
   [92082] = {0,"T3.5"};   -- Felforged Dreadhound
   [55491] = {38,"T3.5"};  -- Nathrezim Armor of Treachery
   [55492] = {38,"T3.5"};  -- Nathrezim Armor of Deceit
