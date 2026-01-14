@@ -3,7 +3,7 @@ local prices = {
     ----------------------------
     --- Upper Karazhan Halls ---
     ----------------------------
-  [55078] = {38,"T3.5"};  -- Ley-attuned Chocker
+  [55078] = {0,"T3.5"};  -- Ley-attuned Chocker
   [55084] = {38,"T3.5"};  -- Torn Wings of Midnight
   [55081] = {28,"T3.5"};  -- Manadrenched Feather Slippers
   [55285] = {28,"T3.5"};  -- Crite's Holy Hands
@@ -11,7 +11,7 @@ local prices = {
   [55080] = {53,"T3.5"};  -- Bloodmoon, Sickle of the Murderous Flight
   [55082] = {38,"T3.5"};  -- Idol of Laceration
   [55083] = {38,"T3.5"};  -- Crown of the Wildpack
-  [55086] = {38,"T3.5"};  -- Magehunter Belt
+  [55086] = {0,"T3.5"};  -- Magehunter Belt
   [55099] = {68,"T3.5"};  -- Leystreel Legplates
   [55089] = {38,"T3.5"};  -- Bands of the Surgebreaker
   [55507] = {33,"T3.5"};  -- Choker of Terminal Arcanum
@@ -107,6 +107,18 @@ local prices = {
   [41447] = {0,"T3.5"};   -- Soul of the Dreadlord
   [41485] = {0,"T3.5"};   -- Pristine Ley Crystal
   [55482] = {33,"T3.5"};  -- Ephemeral Pendant
+  [55506] = {38,"T3.5"};  -- Worldbreaker Girdle
+  [55510] = {68,"T3.5"};  -- Fragments of Aldrach
+  [55511] = {38,"T3.5"};  -- Hellflame
+  [55275] = {0,"T3.5"};   -- Slivers of Nullification
+  [55277] = {68,"T3.5"};  -- The End of All Ambitions
+  [55278] = {38,"T3.5"};  -- Ques\' Gauntlets of Precision"
+  [55280] = {38,"T3.5"};  -- Boots of Elemental Fury
+  [55282] = {38,"T3.5"};  -- Boots of the Grand Crusader
+  [55283] = {38,"T3.5"};  -- Gauntlets of the Grand Crusader
+  [55284] = {38,"T3.5"};  -- Dragunovi\'s Sash of Domination
+  [55286] = {38,"T3.5"};  -- Ring of Holy Light
+  [55508] = {0,"T3.5"};   -- Brand of Karazhan
     
     -----------------
     --- Naxxramas ---
